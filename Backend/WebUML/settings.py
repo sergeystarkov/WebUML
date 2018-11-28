@@ -25,7 +25,7 @@ SECRET_KEY = '*=z6syeizkfmf02fc-ufvm80wd#dvd94(^q1pi1zfkvda5a6pa'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -74,12 +74,12 @@ WSGI_APPLICATION = 'WebUML.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation
@@ -127,8 +127,15 @@ REST_FRAMEWORK = {
     'PAGE_SIZE':10
 }
 
+ALLOWED_HOSTS = ['*']
 
-# try:
-#     from .settings_prod import *
-# except:
-#     pass
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'webumlDB',
+        'USER': 'webuml',
+        'PASSWORD': 'webuml123',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
