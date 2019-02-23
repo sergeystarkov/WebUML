@@ -1,4 +1,5 @@
-import { Component, ViewChild, ElementRef, AfterViewInit  } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnInit  } from '@angular/core';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 declare var mxPerimeter: any;
 declare var mxConstants: any;
@@ -14,22 +15,19 @@ declare var mxGeometry: any;
   templateUrl: './desktop.component.html',
   styleUrls: ['./desktop.component.css']
 })
-export class DesktopComponent implements AfterViewInit  {
+export class DesktopComponent implements OnInit  {
 
   constructor() { }
 
   @ViewChild('graphContainer') graphContainer: ElementRef;
   private graph: mxGraph;
 
-  @ViewChild('tbContainer') tbContainer: ElementRef;
-  private toolbar: any;
+  @ViewChild(ToolbarComponent) toolbarComp : ToolbarComponent;
 
-  ngAfterViewInit() {
+  ngOnInit() {
     
     this.graph = new mxGraph(this.graphContainer.nativeElement);
-    // Creates new toolbar without event processing
-    this.toolbar = new mxToolbar(this.tbContainer.nativeElement);
-    this.toolbar.enabled = false; 
+    
 
     // set default styles for graph
     const style = this.graph.getStylesheet().getDefaultVertexStyle();
@@ -70,47 +68,9 @@ export class DesktopComponent implements AfterViewInit  {
       this.graph.getModel().endUpdate();
       new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
     }
-    this.InitToolbar();
+    this.toolbarComp.graph = this.graph;
+    
   }
 
-  public InitToolbar(): void {
-    this.addVertex('editors/images/swimlane.gif', 120, 160, 'shape=swimlane;startSize=20;');
-    this.addVertex('editors/images/rectangle.gif', 100, 40, '');
-    this.addVertex('editors/images/rounded.gif', 100, 40, 'shape=rounded');
-    this.addVertex('editors/images/ellipse.gif', 40, 40, 'shape=ellipse');
-    this.addVertex('editors/images/rhombus.gif', 40, 40, 'shape=rhombus');
-    this.addVertex('editors/images/triangle.gif', 40, 40, 'shape=triangle');
-    this.addVertex('editors/images/cylinder.gif', 40, 40, 'shape=cylinder');
-    this.addVertex('editors/images/actor.gif', 30, 40, 'shape=actor');
-    this.toolbar.addLine();
-  }
-
-  addVertex(icon, w, h, style) {
-    var vertex = new mxCell(null, new mxGeometry(0, 0, w, h), style);
-    vertex.setVertex(true);
-    this.addToolbarItem(this.graph, this.toolbar, vertex, icon);
-  }
-
-  addToolbarItem(graph: mxGraph, toolbar: any, prototype, image) {
-    // Function that is executed when the image is dropped on
-    // the graph. The cell argument points to the cell under
-    // the mousepointer if there is one.
-
-    console.log(graph);
-
-    var funct = function (graph, evt, cell) {
-      graph.stopEditing(false);
-
-      var pt = graph.getPointForEvent(evt);
-      var vertex = graph.getModel().cloneCell(prototype);
-      vertex.geometry.x = pt.x;
-      vertex.geometry.y = pt.y;
-
-      graph.setSelectionCells(graph.importCells([vertex], 0, 0, cell));
-    }
-
-    // Creates the image which is used as the drag icon (preview)
-    var img = toolbar.addMode(null, image, funct);
-    mxUtils.makeDraggable(img, graph, funct);
-  }
+  
 }
