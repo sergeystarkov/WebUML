@@ -1,17 +1,15 @@
-<div class="row">
-
-  <div class="col-md-1">
-      <div class="Tools">
-        <app-toolbar></app-toolbar>
+<section class="desctop">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2 toolbar">
+        <app-toolbar>toolbar</app-toolbar>
       </div>
+      <div class="col-md-8 blueprint">
+        <div #graphContainer id="graphContainer"></div>
+      </div>
+      <div class="col-md-2 servicepanel">
+        <app-control-panel> servicepanel </app-control-panel>
+      </div>
+    </div>
   </div>
-
-  <div class="col-md-9">
-    <div #graphContainer id="graphContainer"></div>  
-  </div>  
-
-  <div class="col-md-2">
-    <app-control-panel> Control Panel... </app-control-panel>
-  </div>
-
-</div>
+</section>

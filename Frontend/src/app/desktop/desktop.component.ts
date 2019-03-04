@@ -27,7 +27,9 @@ export class DesktopComponent implements OnInit  {
   ngOnInit() {
     
     this.graph = new mxGraph(this.graphContainer.nativeElement);
-    
+    this.graph.setConnectable(true);
+    this.graph.setCellsDeletable(true);
+    this.graph.setEdgeLabelsMovable(true);
 
     // set default styles for graph
     const style = this.graph.getStylesheet().getDefaultVertexStyle();

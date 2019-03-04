@@ -1,4 +1,18 @@
-.row {
+.desctop {
     height: 100vh;
-    background-color: rgb(20, 221, 154);
+    background-color: rgb(255, 217, 217);
+}
+
+.blueprint {
+    height: 80vh;
+    background-color: white;
+    background-image: url('/dassets/images/Blueprint_background.jpg');
+} 
+
+.toolbar {
+    background-color: rgb(232, 248, 172);
+}
+
+.servicepanel {
+    background-color: rgb(255, 0, 0);
 }

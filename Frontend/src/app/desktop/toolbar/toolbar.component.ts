@@ -16,8 +16,6 @@ export class ToolbarComponent implements OnInit {
 
   constructor() { }
 
-
-
   @ViewChild('tbContainer') tbContainer: ElementRef;
   private toolbar: any;
 
@@ -25,7 +23,6 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit() {
     this.toolbar = new mxToolbar(this.tbContainer.nativeElement);
-    this.toolbar.enabled = false;
     this.InitToolbar();
   }
 
@@ -41,13 +38,22 @@ export class ToolbarComponent implements OnInit {
     this.addVertex('editors/images/actor.gif', 30, 40, 'shape=actor');
     this.toolbar.addLine();*/
 
+    //Case tool
+    new tool(
+      this.graph,
+      this.toolbar,
+      'Case',
+      'assets/images/UML/UML_Line.png',
+      200, 120,
+      'shape=line'
+    );
     //Actor tool
     new tool(
       this.graph,
       this.toolbar,
       'Actor',
       'assets/images/UML/UML_Actor.png',
-      120, 120,
+      90, 120,
       'shape=actor'
     );
     //Case tool
@@ -55,8 +61,8 @@ export class ToolbarComponent implements OnInit {
       this.graph,
       this.toolbar,
       'Case',
-      'assets/images/UML/UML_Actor.png',
-      120, 120,
+      'assets/images/UML/UML_Case.png',
+      200, 120,
       'shape=ellipse'
     );
   }
@@ -71,7 +77,9 @@ export class tool {
     private w: number,
     private h: number,
     private style: string
-  ) { this.addVertex() }
+  ) { 
+    this.addVertex();
+  }
 
   addVertex() {
     var vertex = new mxCell(null, new mxGeometry(0, 0, this.w, this.h), this.style);
