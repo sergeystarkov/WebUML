@@ -15,16 +15,17 @@ declare var mxGeometry: any;
   templateUrl: './desktop.component.html',
   styleUrls: ['./desktop.component.css']
 })
-export class DesktopComponent implements OnInit  {
+export class DesktopComponent implements AfterViewInit   {
 
   constructor() { }
 
   @ViewChild('graphContainer') graphContainer: ElementRef;
   private graph: mxGraph;
 
+  public graphXML:any;
   @ViewChild(ToolbarComponent) toolbarComp : ToolbarComponent;
 
-  ngOnInit() {
+  ngAfterViewInit() {
     
     this.graph = new mxGraph(this.graphContainer.nativeElement);
     this.graph.setConnectable(true);
@@ -70,9 +71,27 @@ export class DesktopComponent implements OnInit  {
       this.graph.getModel().endUpdate();
       new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
     }
-    this.toolbarComp.graph = this.graph;
+    
+    setTimeout(() => {
+      this.toolbarComp.graph = this.graph;
+      this.toolbarComp.InitToolbar();
+    }, 500);
+    
+    setTimeout(() => {
+      this.serializeGraph()
+    }, 1000);
     
   }
 
+  serializeGraph() : void {
+
+    var encoder = new mxCodec();
+    var result = encoder.encode(this.graph.getModel());
+    this.graphXML = mxUtils.getXml(result);
+
+    setTimeout(() => {
+      this.serializeGraph()
+    }, 500);
+  }
   
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { APIService } from '../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(
+    private API: APIService,
+    private router: Router
+  ) { }
   ngOnInit() {
   }
 
+  loggedIn() {
+    return this.API.loggedIn()
+  }
+
+  newDocument() {
+    this.API.newDocument("123");
+  }
+
+  toExplorer() {
+    this.router.navigate(['explorer']);
+  }
 }

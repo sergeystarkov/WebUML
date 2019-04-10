@@ -68,9 +68,6 @@ func (account *Account) Create() map[string]interface{} {
 		1,
 	).Scan(&CreateUser)
 
-	log.Println(CreateUser)
-	log.Println(hashedPassword)
-
 	if CreateUser <= 0 || err != nil {
 		return u.Message(false, "Failed to create account, connection error.")
 	}

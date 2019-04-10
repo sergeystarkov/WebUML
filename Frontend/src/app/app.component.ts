@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { APIService } from './api.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +9,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Frontend';
+
+  constructor (private API : APIService) {
+  }
+
+  loggedIn() {
+    return this.API.loggedIn()
+  }
 }

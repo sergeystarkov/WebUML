@@ -1,0 +1,153 @@
+-- Table: "WebUML".comment
+
+-- DROP TABLE "WebUML".comment;
+
+CREATE TABLE "WebUML".comment
+(
+    id bigint NOT NULL,
+    snapshot integer NOT NULL,
+    text text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT comment_pk PRIMARY KEY (id),
+    CONSTRAINT comment_snapshot_fk FOREIGN KEY (snapshot)
+        REFERENCES "WebUML".snapshot (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "WebUML".comment
+    OWNER to postgres;
+	
+	
+	
+	
+	
+	-- Table: "WebUML".documents
+
+-- DROP TABLE "WebUML".documents;
+
+CREATE TABLE "WebUML".documents
+(
+    creator_id integer NOT NULL,
+    id bigint NOT NULL DEFAULT nextval('"WebUML".document_id_seq'::regclass),
+    name character varying(64) COLLATE pg_catalog."default",
+    CONSTRAINT document_pk PRIMARY KEY (id),
+    CONSTRAINT document_creator_id_fk FOREIGN KEY (creator_id)
+        REFERENCES "WebUML".users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "WebUML".documents
+    OWNER to postgres;
+	
+	
+	
+	
+	-- Table: "WebUML".roles
+
+-- DROP TABLE "WebUML".roles;
+
+CREATE TABLE "WebUML".roles
+(
+    id smallint NOT NULL DEFAULT nextval('"WebUML".roles_id_seq'::regclass),
+    name character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT roles_pk PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "WebUML".roles
+    OWNER to postgres;
+	
+	
+	
+	
+	
+	
+	-- Table: "WebUML".snapshot
+
+-- DROP TABLE "WebUML".snapshot;
+
+CREATE TABLE "WebUML".snapshot
+(
+    id bigint NOT NULL DEFAULT nextval('"WebUML".snapshot_id_seq'::regclass),
+    document integer NOT NULL,
+    editor integer NOT NULL,
+    time_save timestamp(6) with time zone NOT NULL,
+    data text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT snapshot_pk PRIMARY KEY (id),
+    CONSTRAINT snapshot_document_fk FOREIGN KEY (document)
+        REFERENCES "WebUML".documents (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT snapshot_editor_fk FOREIGN KEY (editor)
+        REFERENCES "WebUML".users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "WebUML".snapshot
+    OWNER to postgres;
+
+-- Index: snapshot_index
+
+-- DROP INDEX "WebUML".snapshot_index;
+
+CREATE INDEX snapshot_index
+    ON "WebUML".snapshot USING btree
+    (document)
+    TABLESPACE pg_default;
+	
+	
+	
+	
+	
+	
+	-- Table: "WebUML".users
+
+-- DROP TABLE "WebUML".users;
+
+CREATE TABLE "WebUML".users
+(
+    id integer NOT NULL DEFAULT nextval('"WebUML".users_id_seq'::regclass),
+    name character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    pass character varying(64) COLLATE pg_catalog."default" NOT NULL,
+    role smallint NOT NULL,
+    CONSTRAINT users_pk PRIMARY KEY (id),
+    CONSTRAINT loginpass_uc UNIQUE (name, pass)
+,
+    CONSTRAINT role_fk FOREIGN KEY (role)
+        REFERENCES "WebUML".roles (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "WebUML".users
+    OWNER to postgres;
+
+-- Index: fki_role_fk
+
+-- DROP INDEX "WebUML".fki_role_fk;
+
+CREATE INDEX fki_role_fk
+    ON "WebUML".users USING btree
+    (role)
+    TABLESPACE pg_default;

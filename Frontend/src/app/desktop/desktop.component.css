@@ -1,4 +1,4 @@
-.desctop {
+.desktop {
     height: 100vh;
     background-color: rgb(255, 217, 217);
 }
@@ -6,7 +6,7 @@
 .blueprint {
     height: 80vh;
     background-color: white;
-    background-image: url('/dassets/images/Blueprint_background.jpg');
+    background-image: url('/assets/images/Blueprint_background.jpg');
 } 
 
 .toolbar {

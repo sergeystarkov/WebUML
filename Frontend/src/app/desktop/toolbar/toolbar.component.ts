@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit } from '@angular/core';
 declare var mxPerimeter: any;
 declare var mxConstants: any;
 declare var mxUtils: any;
@@ -12,7 +12,7 @@ declare var mxGeometry: any;
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css']
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements AfterViewInit {
 
   constructor() { }
 
@@ -21,13 +21,13 @@ export class ToolbarComponent implements OnInit {
 
   @Input() graph: mxGraph;
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.toolbar = new mxToolbar(this.tbContainer.nativeElement);
-    this.InitToolbar();
+    //this.InitToolbar();
   }
 
   public InitToolbar(): void {
-
+    console.log(this.graph) 
     /*this.addVertex('editors/images/swimlane.gif', 120, 160, 'shape=swimlane;startSize=20;');
     this.addVertex('editors/images/rectangle.gif', 100, 40, '');
     this.addVertex('editors/images/rounded.gif', 100, 40, 'shape=rounded');
@@ -101,6 +101,6 @@ export class tool {
 
     // Creates the image which is used as the drag icon (preview)
     var img = toolbar.addMode(null, image, funct);
-    mxUtils.makeDraggable(img, graph, funct);
+    mxUtils.makeDraggable(img, graph, funct); 
   }
 }

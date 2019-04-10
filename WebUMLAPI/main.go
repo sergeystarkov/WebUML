@@ -24,9 +24,14 @@ func main() {
 	router.HandleFunc("/api/v1/user/new", controllers.CreateAccount).Methods("POST")
 	router.HandleFunc("/api/v1/user/login", controllers.Authenticate).Methods("POST")
 	router.HandleFunc("/api/v1/hello", helloWorld).Methods("GET")
+	router.HandleFunc("/api/v1/document/new", controllers.NewDocument).Methods("POST")
+	router.HandleFunc("/api/v1/documents", controllers.GetDocuments).Methods("GET")
+	router.HandleFunc("/api/v1/snapshots", controllers.GetSnapshots).Methods("GET")
+	router.HandleFunc("/api/v1/snapshot", controllers.GetDocumentSnapshot).Methods("GET")
+	router.HandleFunc("/api/v1/snapshot", controllers.SaveDocumentSnapshot).Methods("POST")
 
 	srv := &http.Server{
-		Handler:      cors.Default().Handler(router),
+		Handler:      cors.AllowAll().Handler(router),
 		Addr:         config["ListenAddress"].(string),
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,

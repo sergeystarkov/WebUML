@@ -1,3 +1,7 @@
-<div>
-  control-panel
+<button (click)="saveDocument()">Сохранить</button>
+
+<div *ngFor="let sn of Snapshots">
+    <div style="cursor: pointer; background-color: aqua; margin: 5px;" (click)="loadSnapshot(sn)">
+      <div>Изменён: {{sn.TimeSave}}</div>
+    </div>
 </div>
