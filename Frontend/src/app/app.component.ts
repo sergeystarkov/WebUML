@@ -14,6 +14,7 @@ export class AppComponent {
   }
 
   loggedIn() {
-    return this.API.loggedIn()
+    // return this.API.loggedIn()
+    return true
   }
 }

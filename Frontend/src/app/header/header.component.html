@@ -1,5 +1,11 @@
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8 col">
+      <div class="logo">
+        <img src="http://uml-holding.com/wp-content/uploads/2017/10/xsfondogrande7.png.pagespeed.ic.tkXtBXMl-q.png" class="logoimg float-left">
+        <h5>UML Redactor</h5>
+      </div>
+    </div>
+    <div class="col-md-2 col">
         <div *ngIf="loggedIn()" ngbDropdown class="d-inline-block" autoClose="outside">
             <button class="btn btn-outline-primary" id="dropdownForm1" ngbDropdownToggle>Файл</button>
             <div ngbDropdownMenu aria-labelledby="dropdownForm1">
@@ -10,7 +16,7 @@
             </div>
           </div>
     </div>
-  <div class="col-md-4">
+  <div class="col-md-2 col">
     <div class="float-right">  
         <div *ngIf="loggedIn(); else loggedOut">
           <app-profile></app-profile>

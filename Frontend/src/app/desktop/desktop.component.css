@@ -1,18 +1,33 @@
 .desktop {
-    height: 100vh;
-    background-color: rgb(255, 217, 217);
+    height: 100%;
+    margin: 0;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 5px;
+    padding-bottom: 20px;
+    background-color: rgb(210, 218,233);
+    background-image: url('/assets/images/bg.png');
+    box-shadow: inset 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
 }
 
 .blueprint {
     height: 80vh;
-    background-color: white;
-    background-image: url('/assets/images/Blueprint_background.jpg');
+    padding: 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
 } 
 
 .toolbar {
-    background-color: rgb(232, 248, 172);
+    padding: 3px;
 }
 
 .servicepanel {
-    background-color: rgb(255, 0, 0);
+    padding: 3px;
+}
+#graphContainer {
+    background-color: rgb(245, 245, 247);
+    background-image: url('/assets/images/bg1.png');
+    height: 100%;
+    border-radius: 5px;
+    box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.5);
 }

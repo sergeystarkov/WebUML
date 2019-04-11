@@ -1,7 +1,9 @@
-<button (click)="saveDocument()">Сохранить</button>
+<div class="cp">
+    <button (click)="saveDocument()" class="sButton">Save</button>
 
-<div *ngFor="let sn of Snapshots">
-    <div style="cursor: pointer; background-color: aqua; margin: 5px;" (click)="loadSnapshot(sn)">
-      <div>Изменён: {{sn.TimeSave}}</div>
+    <div *ngFor="let sn of Snapshots">
+        <div style="cursor: pointer; background-color: aqua; margin: 5px;" (click)="loadSnapshot(sn)">
+          <div>Изменён: {{sn.TimeSave}}</div>
+        </div>
     </div>
 </div>
