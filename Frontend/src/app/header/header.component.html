@@ -1,22 +1,45 @@
 <div class="row">
-    <div class="col-md-8 col">
-      <div class="logo">
+    <div class="col">
+      <div class="logo float-left">
         <img src="http://uml-holding.com/wp-content/uploads/2017/10/xsfondogrande7.png.pagespeed.ic.tkXtBXMl-q.png" class="logoimg float-left">
         <h5>UML Redactor</h5>
       </div>
-    </div>
-    <div class="col-md-2 col">
-        <div *ngIf="loggedIn()" ngbDropdown class="d-inline-block" autoClose="outside">
-            <button class="btn btn-outline-primary" id="dropdownForm1" ngbDropdownToggle>Файл</button>
-            <div ngbDropdownMenu aria-labelledby="dropdownForm1">
-              <form class="px-4 py-3">
-                <button (click)="toExplorer()" type="submit" class="btn btn-primary">Закрыть</button>
-                <button (click)="newDocument()" type="submit" class="btn btn-primary">Новый</button>
-              </form>
-            </div>
+      <div *ngIf="loggedIn()" ngbDropdown class="d-flex float-left" autoClose="outside">
+          <button class="btn btn-outline-primary" id="dropdownForm1" ngbDropdownToggle>Файл</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+            <form class="px-4 py-3">
+              <button (click)="toExplorer()" type="submit" class="btn btn-primary">Закрыть</button>
+              <button (click)="newDocument()" type="submit" class="btn btn-primary">Новый</button>
+            </form>
           </div>
+        </div>
+          <div *ngIf="loggedIn(); else loggedOut">
+            <app-profile></app-profile>
+          </div>
+          <ng-template #loggedOut>
+            <app-login></app-login>
+          </ng-template>
     </div>
-  <div class="col-md-2 col">
+    <!-- <div class="col-md-3 col">
+      <div class="headdet_buttons">
+        <div *ngIf="loggedIn()" ngbDropdown class="d-inline-block float-left" autoClose="outside">
+          <button class="btn btn-outline-primary" id="dropdownForm1" ngbDropdownToggle>Файл</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+            <form class="px-4 py-3">
+              <button (click)="toExplorer()" type="submit" class="btn btn-primary">Закрыть</button>
+              <button (click)="newDocument()" type="submit" class="btn btn-primary">Новый</button>
+            </form>
+          </div>
+        </div>
+          <div *ngIf="loggedIn(); else loggedOut">
+            <app-profile></app-profile>
+          </div>
+          <ng-template #loggedOut>
+            <app-login></app-login>
+          </ng-template>
+      </div>
+    </div> -->
+  <!-- <div class="col-md-2 col">
     <div class="float-right">  
         <div *ngIf="loggedIn(); else loggedOut">
           <app-profile></app-profile>
@@ -24,7 +47,6 @@
         <ng-template #loggedOut>
           <app-login></app-login>
         </ng-template>
-      
     </div>
-  </div>
+  </div> -->
 </div>

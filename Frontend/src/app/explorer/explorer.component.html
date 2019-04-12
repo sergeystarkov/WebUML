@@ -1,4 +1,11 @@
-EXPLORER!!!
-<div class="row">
-        <app-file *ngFor="let file of Files" [File]="file"></app-file>
+<div class="explorer">
+        <div class="board">
+                <div class="files">
+                        <div class="row">
+                                <app-file *ngFor="let file of Files" [File]="file"></app-file>
+                        </div>
+                </div>
+        </div>
 </div>
+
+

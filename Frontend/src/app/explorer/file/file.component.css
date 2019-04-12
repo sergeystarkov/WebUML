@@ -1,0 +1,18 @@
+
+.card {
+    overflow: hidden;
+    position: relative;
+    margin: 2px;
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+    background-color: rgb(210, 218,233);
+    background-image: url('/assets/images/bg.png');
+    box-shadow: inset 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+}
+.card-body {
+    text-align: center;
+}
+/* .card-title {
+    max-height: 30%;
+} */

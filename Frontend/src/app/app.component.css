@@ -1,6 +1,6 @@
 * {
     font-family: 'Chau Philomene One', sans-serif;
-    background-color: rgb(190, 198,213);
-    background-image: url('/assets/images/bg.png');
-    box-shadow: inset 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+}
+.hover:hover {
+    color: #ffffff;
 }

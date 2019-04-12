@@ -9,7 +9,7 @@ import { APIService } from '../api.service';
 
 export class ControlPanelComponent implements OnInit {
 
-  public Snapshots = [];
+  public Snapshots = [{TimeSave: "12:14"}, {TimeSave: "12:14"}, {TimeSave: "12:14"}, {TimeSave: "12:14"}, {TimeSave: "12:14"}];
 
   @Input() WorkingGraph: any;
   @Input() WorkingDocID: number;

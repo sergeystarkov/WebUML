@@ -9,7 +9,7 @@ import { APIService } from '../api.service';
 })
 export class ExplorerComponent implements OnInit {
 
-  public Files = [];
+  public Files = [{Name: "Save 1"}, {Name: "Save 1"}, {Name: "Save 1"}, {Name: "Save 1"}, {Name: "Save 1"}, {Name: "Save 1"}, {Name: "Save 1"}, {Name: "Save 1"}, {Name: "Save 1"}];
   timerVar;
 
   constructor(private API: APIService) {
