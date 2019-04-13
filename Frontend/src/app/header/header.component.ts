@@ -17,8 +17,7 @@ export class HeaderComponent implements OnInit {
   }
 
   loggedIn() {
-    // return this.API.loggedIn()
-    return true
+    return this.API.loggedIn()
   }
 
   newDocument() {

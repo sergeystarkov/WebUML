@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { APIService } from '../../api.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,7 +11,6 @@ export class FileComponent implements OnInit {
   @Input() File
 
   constructor (
-    private API : APIService,
     private router: Router
     ) {}
 
@@ -21,9 +19,6 @@ export class FileComponent implements OnInit {
 
   OpenFile() {
     console.log("OpenFile")
-    this.API.getSnapshots(this.File.DocID).subscribe(data => {
-      console.log(data)
-      this.router.navigate(['desktop']);
-    });
+    this.router.navigate(['desktop', this.File.DocID]);
   }
 }

@@ -6,7 +6,7 @@ import { ExplorerComponent } from './explorer/explorer.component'
 
 const routes: Routes = [
   { path: 'explorer', component: ExplorerComponent },
-  { path: 'desktop', component: DesktopComponent }
+  { path: 'desktop/:id', component: DesktopComponent }
 ];
 
 @NgModule({

@@ -44,7 +44,7 @@ var GetSnapshots = func(w http.ResponseWriter, r *http.Request) {
 var GetDocumentSnapshot = func(w http.ResponseWriter, r *http.Request) {
 
 	Doc := &models.DocumentSnapshot{}
-	Doc.DocID, _ = strconv.ParseUint(r.Header.Get("DocumentID"), 10, 64)
+	Doc.SnapshotID, _ = strconv.ParseUint(r.Header.Get("SnapshotID"), 10, 64)
 
 	resp := Doc.GetDocumentSnapshot()
 	u.Respond(w, resp)
@@ -58,7 +58,7 @@ var SaveDocumentSnapshot = func(w http.ResponseWriter, r *http.Request) {
 		u.Respond(w, u.Message(false, "Invalid request"))
 		return
 	}
-
+	log.Println("Json", Doc)
 	resp := Doc.SaveDocumentSnapshot()
 	u.Respond(w, resp)
 }

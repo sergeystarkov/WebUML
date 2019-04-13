@@ -82,7 +82,7 @@ type DocumentSnapshot struct {
 
 func (Doc *DocumentSnapshot) GetDocumentSnapshot() map[string]interface{} {
 
-	log.Println("GetDocumentSnapshots()", Doc.DocID)
+	log.Println("GetDocumentSnapshots()", Doc.SnapshotID)
 
 	//Open DB connection
 	db, errDB := sql.Open("postgres", u.GetDBParams())
@@ -92,30 +92,16 @@ func (Doc *DocumentSnapshot) GetDocumentSnapshot() map[string]interface{} {
 	}
 	defer db.Close()
 
-	rec, err := db.Query("SELECT ",
-		"documents.id, documents.creator_id, snapshot.data",
-		"FROM \"WebUML\".\"snapshot\", \"WebUML\".\"documents\"",
-		"WHERE documents.id=$1;",
-		Doc.DocID)
-	if err != nil {
-		return u.Message(false, "Failed get document.")
-	}
-
-	var rows = make([]DocumentSnapshot, 0)
-	var row DocumentSnapshot
-	for rec.Next() {
-		err = rec.Scan(
-			&row.DocID,
-			&row.AuthorID,
-			&row.Data,
-		)
-		if err == nil {
-			rows = append(rows, row)
-		}
+	row := db.QueryRow("SELECT snapshot.data FROM \"WebUML\".\"snapshot\" WHERE snapshot.id=$1;",
+		Doc.SnapshotID).
+		Scan(&Doc.Data)
+	if row != nil {
+		log.Println(row)
+		return u.Message(false, "Failed get snapshot.")
 	}
 
 	resp := u.Message(true, "Sucsessfull!")
-	resp["DocumentSnapshot"] = rows
+	resp["SnapshotData"] = Doc
 	return resp
 }
 
@@ -189,9 +175,11 @@ func (DocS *DocumentSnapshot) SaveDocumentSnapshot() map[string]interface{} {
 	}
 	defer db.Close()
 
-	err := db.QueryRow("SELECT \"WebUML\".AddSnapshot($1,$2)",
-		DocS.DocID, DocS.Data).Scan(&DocS.SnapshotID)
-	if DocS.SnapshotID <= 0 || err != nil {
+	err := db.QueryRow("SELECT \"WebUML\".\"AddSnapshot\"($1,$2)",
+		DocS.DocID, DocS.Data).
+		Scan(&DocS.SnapshotID)
+	if err != nil {
+		log.Println(DocS, err)
 		return u.Message(false, "Failed add snapshot.")
 	}
 

@@ -66,18 +66,7 @@ export class APIService {
     return this.http.get<any>(this.uri + '/documents', { headers: myHeaders });    
   } 
 
-  public loadDocument(DocID : number) : Observable<any> {
-
-    const headerDict = {
-      'Authorization': this.GetToken(),
-      'DocumentID': DocID.toString()
-    }
-    const myHeaders = new HttpHeaders(headerDict)
-    return this.http.get<any>(this.uri + '/document', { headers: myHeaders });    
-  }
-
   public getSnapshots(DocID : number) : Observable<any> {
-
     const headerDict = {
       'Authorization': this.GetToken(),
       'DocumentID': DocID.toString()
@@ -85,15 +74,22 @@ export class APIService {
     const myHeaders = new HttpHeaders(headerDict)
     return this.http.get<any>(this.uri + '/snapshots', { headers: myHeaders });    
   }
+  
+  public loadSnapshot(SnapshotID : number) : Observable<any> {
+    const headerDict = {
+      'Authorization': this.GetToken(),
+      'SnapshotID': SnapshotID.toString()
+    }
+    const myHeaders = new HttpHeaders(headerDict)
+    return this.http.get<any>(this.uri + '/snapshot', { headers: myHeaders });    
+  }
 
   public saveSnapshot(Snapshot : any) : Observable<any> {
-    
     const headerDict = {
       'Authorization': this.GetToken()
     }
     const myHeaders = new HttpHeaders(headerDict)
-        
-    const body = { DocID: Snapshot.DocumentID, Data: Snapshot.Data };
+    const body = { DocID: +Snapshot.DocID, Data: Snapshot.Data };
     return this.http.post<any>(this.uri + '/snapshot', body, { headers: myHeaders });
   }
-}
+} 

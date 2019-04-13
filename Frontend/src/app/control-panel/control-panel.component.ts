@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { APIService } from '../api.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-control-panel',
@@ -9,34 +10,37 @@ import { APIService } from '../api.service';
 
 export class ControlPanelComponent implements OnInit {
 
-  public Snapshots = [{TimeSave: "12:14"}, {TimeSave: "12:14"}, {TimeSave: "12:14"}, {TimeSave: "12:14"}, {TimeSave: "12:14"}];
-
-  @Input() WorkingGraph: any;
-  @Input() WorkingDocID: number;
-  @Input() WorkingSnapshotID: number;
-  @Input() DocID: number;
+  public Snapshots = [
+    {TimeSave: "12:14"}, 
+    {TimeSave: "12:14"}, 
+    {TimeSave: "12:14"}, 
+    {TimeSave: "12:14"}, 
+    {TimeSave: "12:14"}
+  ];
 
   constructor(
     private API: APIService
+    ,private Route : ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.DocID = 12;
-    this.API.getSnapshots(this.DocID).
-      subscribe(data => {
-        this.Snapshots = data.Snapshots;
-        console.log(this.Snapshots)
-      });
+    
   }
 
+  public loadSnapshots(): void {
+    this.API.getSnapshots(this.Route.snapshot.params.id).
+    subscribe(data => {
+      this.Snapshots = data.Snapshots;
+      console.log(this.Snapshots)
+    });
+  }
+  @Output() LoadSnapshotEvent = new EventEmitter();
   loadSnapshot(snapshot: any) {
-    console.log(snapshot);
-
-    //CurrentSnapshot
+    this.LoadSnapshotEvent.emit(snapshot);
   }
 
+  @Output() SaveSnapshotEvent = new EventEmitter();
   saveDocument() {
-    //onsole.log(this.CurrentWork);
-    //this.API.
+    this.SaveSnapshotEvent.emit(null);
   }
 }
