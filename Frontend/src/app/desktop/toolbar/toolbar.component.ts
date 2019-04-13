@@ -19,15 +19,16 @@ export class ToolbarComponent implements AfterViewInit {
   @ViewChild('tbContainer') tbContainer: ElementRef;
   private toolbar: any;
 
-  @Input() graph: mxGraph;
+  @Input() Tool: any
+  
 
   ngAfterViewInit() {
     this.toolbar = new mxToolbar(this.tbContainer.nativeElement);
-    //this.InitToolbar();
+    this.InitToolbar();
   }
+  Title: string;
 
   public InitToolbar(): void {
-    console.log(this.graph) 
     /*this.addVertex('editors/images/swimlane.gif', 120, 160, 'shape=swimlane;startSize=20;');
     this.addVertex('editors/images/rectangle.gif', 100, 40, '');
     this.addVertex('editors/images/rounded.gif', 100, 40, 'shape=rounded');
@@ -38,32 +39,13 @@ export class ToolbarComponent implements AfterViewInit {
     this.addVertex('editors/images/actor.gif', 30, 40, 'shape=actor');
     this.toolbar.addLine();*/
 
-    //Case tool
     new tool(
-      this.graph,
+      this.Tool.graph,
       this.toolbar,
-      'Case',
-      'assets/images/UML/UML_Line.png',
-      200, 120,
-      'shape=line'
-    );
-    //Actor tool
-    new tool(
-      this.graph,
-      this.toolbar,
-      'Actor',
-      'assets/images/UML/UML_Actor.png',
-      90, 120,
-      'shape=actor'
-    );
-    //Case tool
-    new tool(
-      this.graph,
-      this.toolbar,
-      'Case',
-      'assets/images/UML/UML_Case.png',
-      200, 120,
-      'shape=ellipse'
+      this.Tool.title,
+      this.Tool.icon,
+      this.Tool.w, this.Tool.h,
+      this.Tool.style
     );
   }
 }

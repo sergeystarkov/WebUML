@@ -127,20 +127,16 @@ func (Doc *SnapshotInfo) GetSnapshots() map[string]interface{} {
 
 	rec, err := db.Query(" SELECT "+
 		"\"snapshot\".id,"+
-		"\"snapshot\".time_save,"+
-		"\"documents\".id,"+
-		"\"documents\".creator_id,"+
-		"\"documents\".name"+
+		"\"snapshot\".time_save "+
 		" FROM "+
-		"\"WebUML\".snapshot,"+
-		"\"WebUML\".documents"+
+		"\"WebUML\".snapshot "+
 		" WHERE "+
-		"\"WebUML\".\"documents\".id=$1",
+		"\"WebUML\".\"snapshot\".document=$1",
 		Doc.DocID,
 	)
 	if err != nil {
 		log.Println(err)
-		return u.Message(false, "Failed get document.")
+		return u.Message(false, "Failed get snapshots.")
 	}
 
 	var rows = make([]SnapshotInfo, 0)
@@ -149,9 +145,6 @@ func (Doc *SnapshotInfo) GetSnapshots() map[string]interface{} {
 		err = rec.Scan(
 			&row.SnapshotID,
 			&row.TimeSave,
-			&row.DocID,
-			&row.AuthorID,
-			&row.Name,
 		)
 		if err == nil {
 			rows = append(rows, row)

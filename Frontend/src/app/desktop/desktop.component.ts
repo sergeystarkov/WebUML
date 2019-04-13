@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, Input } from '@angular/core';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import { ToolbarComponent, tool } from './toolbar/toolbar.component';
 import { ControlPanelComponent } from '../control-panel/control-panel.component'
 import { ActivatedRoute } from '@angular/router';
 import { APIService } from '../api.service';
@@ -31,18 +31,19 @@ export class DesktopComponent implements AfterViewInit {
 
   public graphXML: any;
 
+  ToolBars = [ ];
+
   @ViewChild(ToolbarComponent) toolbarComp: ToolbarComponent;
-  @ViewChild(ControlPanelComponent) cp : ControlPanelComponent;
+  @ViewChild(ControlPanelComponent) cp: ControlPanelComponent;
 
   ngAfterViewInit() {
 
     this.graph = new mxGraph(this.graphContainer.nativeElement);
-    //this.graph.setConnectable(true);
-    //this.graph.setCellsDeletable(true);
-    //this.graph.setEdgeLabelsMovable(true);
+    this.graph.setConnectable(true);
+    this.graph.setCellsDeletable(true);
+    this.graph.setEdgeLabelsMovable(true);
     this.graph.setAllowNegativeCoordinates(true);
     this.graph.collapseToPreferredSize = false;
-
 
     // set default styles for graph
     const style = this.graph.getStylesheet().getDefaultVertexStyle();
@@ -50,31 +51,29 @@ export class DesktopComponent implements AfterViewInit {
     style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_ELLIPSE;
     style[mxConstants.DEFAULT_VALID_COLOR] = '#00FF00';
     this.graph.getStylesheet().putDefaultVertexStyle(style);
-/*
-    // add cells
-    try {
-      const parent = this.graph.getDefaultParent();
-      this.graph.getModel().beginUpdate();
-      const vertex1 = this.graph.insertVertex(parent, '1', 'Vertex 1', 0, 0, 200, 80);
-      const vertex2 = this.graph.insertVertex(parent, '2', 'Vertex 2', 0, 0, 200, 80);
-      this.graph.insertEdge(parent, '', '', vertex1, vertex2);
-    } finally {
-      this.graph.getModel().endUpdate();
-      new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
-    }
 
-    var encoder = new mxCodec();
-    var result = encoder.encode(this.graph.getModel());
-    var xml = mxUtils.getXml(result);
-    //console.log(xml);
-
-    this.graph.removeCells(this.graph.getChildVertices(this.graph.getDefaultParent()), this.graph.getAllEdges(this.graph.getChildVertices(this.graph.getDefaultParent())));
-*/
-
-    
     setTimeout(() => {
-      this.toolbarComp.graph = this.graph;
-      this.toolbarComp.InitToolbar();
+      this.ToolBars = [{
+        graph: this.graph,
+        title: 'Actor',
+        icon: 'assets/images/UML/UML_Actor.png',
+        w: 90, h: 120,
+        style: 'shape=actor'
+      },
+      {
+        graph: this.graph,
+        title: 'Case',
+        icon: 'assets/images/UML/UML_Case.png',
+        w: 200, h: 120,
+        style: 'shape=ellipse'
+      },
+      {
+        graph: this.graph,
+        title: 'Line',
+        icon: 'assets/images/UML/UML_Line.png',
+        w: 200, h: 120,
+        style: 'shape=line'
+      }];
       this.cp.loadSnapshots();
     }, 500);
 
@@ -95,6 +94,9 @@ export class DesktopComponent implements AfterViewInit {
     }, 500);
   }
 
+  loggedIn(): boolean {
+    return this.API.loggedIn();
+  }
   saveSnapshot() {
     console.log("saveSnapshot()")
     var Request = { DocID: this.Route.snapshot.params.id, Data: this.graphXML }
@@ -114,7 +116,6 @@ export class DesktopComponent implements AfterViewInit {
       subscribe(data => {
         console.log(data)
         try {
-          data.SnapshotData.Data ='<root><mxCell id="2" value="Hello," vertex="1"><mxGeometry x="20" y="20" width="80" height="30" as="geometry"/></mxCell><mxCell id="3" value="World!" vertex="1"><mxGeometry x="200" y="150" width="80" height="30" as="geometry"/></mxCell><mxCell id="4" value="" edge="1" source="2" target="3"><mxGeometry relative="1" as="geometry"/></mxCell></root>';
           var xml = mxUtils.parseXml(data.SnapshotData.Data).documentElement;
           this.graph.getModel().beginUpdate();
           this.graph.model.clear();
